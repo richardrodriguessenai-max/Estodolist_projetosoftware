@@ -1,0 +1,330 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <!-- Define os caracteres para aceitar acentos e cedilha -->
+    <meta charset="UTF-8">
+
+    <!-- Adapta o site a celulares, tablets e computadores -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Cor da barra do navegador -->
+    <meta name="theme-color" content="#141414" id="themeColor">
+
+    <!-- Nome que aparece na aba do navegador -->
+    <title>EsToDoList</title>
+
+    <!-- Conecta o arquivo de estilos -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Container principal do sistema -->
+    <div class="app">
+
+        <!-- Barra lateral de navegação -->
+        <aside class="sidebar">
+
+            <!-- Logo e nome do sistema -->
+            <div class="brand">
+                <div class="brand-icon">✓</div>
+                <span>EsToDoList</span>
+            </div>
+
+            <!-- Menu para navegar entre as tarefas -->
+            <nav class="navigation" aria-label="Menu principal">
+
+                <button class="nav-item active" data-view="all" type="button">
+                    <span class="nav-icon">⌂</span>
+                    <span class="nav-label">Todas as tarefas</span>
+                </button>
+
+                <button class="nav-item" data-view="pending" type="button">
+                    <span class="nav-icon">◷</span>
+                    <span class="nav-label">Pendentes</span>
+                </button>
+
+                <button class="nav-item" data-view="completed" type="button">
+                    <span class="nav-icon">✓</span>
+                    <span class="nav-label">Concluídas</span>
+                </button>
+
+            </nav>
+
+            <!-- Parte inferior da barra lateral -->
+            <div class="sidebar-bottom">
+
+                <!-- Mensagem motivacional -->
+                <div class="mini-note">
+                    <span class="note-icon">✦</span>
+
+                    <p>
+                        Um passo de cada vez.<br>
+                        <strong>Você consegue!</strong>
+                    </p>
+                </div>
+
+                <!-- Perfil do estudante -->
+                <div class="profile">
+                    <div class="avatar">E</div>
+
+                    <div>
+                        <strong>Estudante</strong>
+                        <small>Minha rotina escolar</small>
+                    </div>
+                </div>
+
+            </div>
+
+        </aside>
+
+        <!-- Área principal do sistema -->
+        <main class="main-content">
+
+            <!-- Cabeçalho e data atual -->
+            <header class="topbar">
+
+                <div>
+                    <p class="eyebrow">ORGANIZE SUA ROTINA</p>
+
+                    <h1>Minhas tarefas</h1>
+
+                    <p class="subtitle">
+                        Planeje seus estudos e acompanhe seu progresso.
+                    </p>
+                </div>
+
+                <!-- Data preenchida pelo JavaScript -->
+                <div class="date-chip" id="todayDate"></div>
+
+            </header>
+
+            <!-- Resumo das tarefas -->
+            <section class="stats" aria-label="Resumo das tarefas">
+
+                <article class="stat-card">
+                    <div class="stat-icon blue">▤</div>
+
+                    <div class="stat-info">
+                        <span>Total de tarefas</span>
+                        <strong id="totalCount">0</strong>
+                    </div>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-icon orange">◷</div>
+
+                    <div class="stat-info">
+                        <span>Pendentes</span>
+                        <strong id="pendingCount">0</strong>
+                    </div>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-icon green">✓</div>
+
+                    <div class="stat-info">
+                        <span>Concluídas</span>
+                        <strong id="completedCount">0</strong>
+                    </div>
+                </article>
+
+            </section>
+
+            <!-- Formulário e lista de tarefas -->
+            <section class="workspace">
+
+                <!-- Painel de cadastro e edição -->
+                <section class="panel form-panel">
+
+                    <div class="panel-heading">
+                        <div>
+                            <h2 id="formHeading">Adicionar tarefa</h2>
+                            <p>Preencha os dados abaixo.</p>
+                        </div>
+
+                        <div class="heading-icon">＋</div>
+                    </div>
+
+                    <!-- Formulário de tarefas -->
+                    <form id="taskForm">
+
+                        <label for="taskName">
+                            Nome da tarefa <span>*</span>
+                        </label>
+
+                        <input
+                            id="taskName"
+                            name="taskName"
+                            type="text"
+                            placeholder="Ex.: Trabalho de Banco de Dados"
+                            maxlength="100"
+                            required
+                        >
+
+                        <label for="taskDescription">Descrição</label>
+
+                        <textarea
+                            id="taskDescription"
+                            name="taskDescription"
+                            rows="3"
+                            placeholder="Anote os detalhes importantes..."
+                        ></textarea>
+
+                        <!-- Data e prioridade -->
+                        <div class="form-row">
+
+                            <div>
+                                <label for="taskDate">Data de entrega</label>
+
+                                <input
+                                    id="taskDate"
+                                    name="taskDate"
+                                    type="date"
+                                >
+                            </div>
+
+                            <div>
+                                <label for="taskPriority">Prioridade</label>
+
+                                <select id="taskPriority" name="taskPriority">
+                                    <option value="Baixa">Baixa</option>
+
+                                    <option value="Média" selected>
+                                        Média
+                                    </option>
+
+                                    <option value="Alta">Alta</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <!-- Botões do formulário -->
+                        <div class="form-actions">
+
+                            <button
+                                class="primary-button"
+                                type="submit"
+                                id="saveButton"
+                            >
+                                ＋ Adicionar tarefa
+                            </button>
+
+                            <button
+                                class="text-button hidden"
+                                type="button"
+                                id="cancelEdit"
+                            >
+                                Cancelar
+                            </button>
+
+                        </div>
+
+                        <!-- Mensagens de confirmação -->
+                        <p
+                            class="form-message"
+                            id="formMessage"
+                            role="status"
+                        ></p>
+
+                    </form>
+
+                </section>
+
+                <!-- Painel da lista de tarefas -->
+                <section class="panel tasks-panel">
+
+                    <div class="tasks-heading">
+                        <div>
+                            <h2>Lista de tarefas</h2>
+
+                            <p id="listSubtitle">
+                                Veja tudo o que precisa fazer.
+                            </p>
+                        </div>
+
+                        <span class="task-total" id="visibleCount">
+                            0 tarefas
+                        </span>
+                    </div>
+
+                    <!-- Pesquisa e filtros -->
+                    <div class="filters">
+
+                        <div class="search-box">
+                            <span aria-hidden="true">⌕</span>
+
+                            <input
+                                id="searchInput"
+                                type="search"
+                                placeholder="Buscar tarefa..."
+                                aria-label="Buscar tarefa"
+                            >
+                        </div>
+
+                        <select
+                            id="priorityFilter"
+                            aria-label="Filtrar por prioridade"
+                        >
+                            <option value="all">Todas as prioridades</option>
+                            <option value="Alta">Prioridade alta</option>
+                            <option value="Média">Prioridade média</option>
+                            <option value="Baixa">Prioridade baixa</option>
+                        </select>
+
+                    </div>
+
+                    <!-- O JavaScript adiciona as tarefas aqui -->
+                    <div class="task-list" id="taskList"></div>
+
+                    <!-- Mensagem para lista vazia -->
+                    <div class="empty-state" id="emptyState">
+                        <div class="empty-icon">✓</div>
+
+                        <h3>Nenhuma tarefa por aqui</h3>
+
+                        <p>
+                            Adicione uma tarefa ou altere os filtros
+                            para ver seus itens.
+                        </p>
+                    </div>
+
+                </section>
+
+            </section>
+
+            <!-- Rodapé com o novo botão de tema -->
+            <footer class="site-footer">
+
+                <p>
+                    EsToDoList
+                    <span>•</span>
+                    Seus estudos organizados em um só lugar.
+                </p>
+
+                <!-- Botão para alternar entre os temas -->
+                <button
+                    type="button"
+                    id="themeToggle"
+                    class="theme-toggle"
+                    aria-label="Ativar modo claro"
+                    aria-pressed="false"
+                >
+                    <span id="themeIcon" aria-hidden="true">☀</span>
+                    <span id="themeLabel">Ativar modo claro</span>
+                </button>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+    <!-- Conecta o arquivo JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+</html>
