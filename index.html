@@ -1,330 +1,258 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
-    <!-- Define os caracteres para aceitar acentos e cedilha -->
     <meta charset="UTF-8">
-
-    <!-- Adapta o site a celulares, tablets e computadores -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Cor da barra do navegador -->
-    <meta name="theme-color" content="#141414" id="themeColor">
-
-    <!-- Nome que aparece na aba do navegador -->
     <title>EsToDoList</title>
 
-    <!-- Conecta o arquivo de estilos -->
-    <link rel="stylesheet" href="style.css">
+    <!-- Importa o Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="bg-[#141414] text-white min-h-screen">
 
-    <!-- Container principal do sistema -->
-    <div class="app">
+    <!-- Container principal -->
+    <div class="flex flex-col md:flex-row min-h-screen">
 
-        <!-- Barra lateral de navegação -->
-        <aside class="sidebar">
+        <!-- Barra lateral -->
+        <aside class="bg-[#202020] p-5 md:w-64 flex flex-col">
 
-            <!-- Logo e nome do sistema -->
-            <div class="brand">
-                <div class="brand-icon">✓</div>
-                <span>EsToDoList</span>
+            <!-- Logo -->
+            <div class="flex items-center gap-3 mb-8">
+                <div class="bg-red-600 w-10 h-10 rounded-lg flex items-center justify-center text-xl">
+                    ✓
+                </div>
+
+                <h2 class="text-xl font-bold">EsToDoList</h2>
             </div>
 
-            <!-- Menu para navegar entre as tarefas -->
-            <nav class="navigation" aria-label="Menu principal">
+            <!-- Menu -->
+            <nav class="flex flex-col gap-3">
 
-                <button class="nav-item active" data-view="all" type="button">
-                    <span class="nav-icon">⌂</span>
-                    <span class="nav-label">Todas as tarefas</span>
+                <button class="bg-red-600 p-3 rounded-lg text-left">
+                    ⌂ Todas as tarefas
                 </button>
 
-                <button class="nav-item" data-view="pending" type="button">
-                    <span class="nav-icon">◷</span>
-                    <span class="nav-label">Pendentes</span>
+                <button class="hover:bg-[#303030] p-3 rounded-lg text-left">
+                    ◷ Pendentes
                 </button>
 
-                <button class="nav-item" data-view="completed" type="button">
-                    <span class="nav-icon">✓</span>
-                    <span class="nav-label">Concluídas</span>
+                <button class="hover:bg-[#303030] p-3 rounded-lg text-left">
+                    ✓ Concluídas
                 </button>
 
             </nav>
 
-            <!-- Parte inferior da barra lateral -->
-            <div class="sidebar-bottom">
+            <!-- Mensagem -->
+            <div class="mt-8 bg-[#303030] p-4 rounded-lg">
+                <p class="text-sm text-gray-300">
+                    Um passo de cada vez.
+                </p>
 
-                <!-- Mensagem motivacional -->
-                <div class="mini-note">
-                    <span class="note-icon">✦</span>
+                <strong>Você consegue!</strong>
+            </div>
 
-                    <p>
-                        Um passo de cada vez.<br>
-                        <strong>Você consegue!</strong>
-                    </p>
+            <!-- Perfil -->
+            <div class="mt-auto pt-8 flex items-center gap-3">
+                <div class="bg-red-600 w-10 h-10 rounded-full flex items-center justify-center">
+                    E
                 </div>
 
-                <!-- Perfil do estudante -->
-                <div class="profile">
-                    <div class="avatar">E</div>
-
-                    <div>
-                        <strong>Estudante</strong>
-                        <small>Minha rotina escolar</small>
-                    </div>
+                <div>
+                    <p class="font-bold">Estudante</p>
+                    <p class="text-gray-400 text-sm">Minha rotina escolar</p>
                 </div>
-
             </div>
 
         </aside>
 
-        <!-- Área principal do sistema -->
-        <main class="main-content">
+        <!-- Conteúdo principal -->
+        <main class="flex-1 p-5 md:p-8">
 
-            <!-- Cabeçalho e data atual -->
-            <header class="topbar">
+            <!-- Cabeçalho -->
+            <header class="mb-8">
 
-                <div>
-                    <p class="eyebrow">ORGANIZE SUA ROTINA</p>
+                <p class="text-red-500 text-sm font-bold">
+                    ORGANIZE SUA ROTINA
+                </p>
 
-                    <h1>Minhas tarefas</h1>
+                <h1 class="text-3xl font-bold mt-2">
+                    Minhas tarefas
+                </h1>
 
-                    <p class="subtitle">
-                        Planeje seus estudos e acompanhe seu progresso.
-                    </p>
-                </div>
-
-                <!-- Data preenchida pelo JavaScript -->
-                <div class="date-chip" id="todayDate"></div>
+                <p class="text-gray-400 mt-2">
+                    Planeje seus estudos e acompanhe seu progresso.
+                </p>
 
             </header>
 
             <!-- Resumo das tarefas -->
-            <section class="stats" aria-label="Resumo das tarefas">
+            <section class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
 
-                <article class="stat-card">
-                    <div class="stat-icon blue">▤</div>
+                <!-- Total -->
+                <div class="bg-[#202020] p-5 rounded-xl">
+                    <p class="text-gray-400">Total de tarefas</p>
+                    <h2 class="text-3xl font-bold mt-2">0</h2>
+                </div>
 
-                    <div class="stat-info">
-                        <span>Total de tarefas</span>
-                        <strong id="totalCount">0</strong>
-                    </div>
-                </article>
+                <!-- Pendentes -->
+                <div class="bg-[#202020] p-5 rounded-xl">
+                    <p class="text-gray-400">Pendentes</p>
+                    <h2 class="text-3xl font-bold mt-2 text-orange-400">0</h2>
+                </div>
 
-                <article class="stat-card">
-                    <div class="stat-icon orange">◷</div>
-
-                    <div class="stat-info">
-                        <span>Pendentes</span>
-                        <strong id="pendingCount">0</strong>
-                    </div>
-                </article>
-
-                <article class="stat-card">
-                    <div class="stat-icon green">✓</div>
-
-                    <div class="stat-info">
-                        <span>Concluídas</span>
-                        <strong id="completedCount">0</strong>
-                    </div>
-                </article>
+                <!-- Concluídas -->
+                <div class="bg-[#202020] p-5 rounded-xl">
+                    <p class="text-gray-400">Concluídas</p>
+                    <h2 class="text-3xl font-bold mt-2 text-green-500">0</h2>
+                </div>
 
             </section>
 
-            <!-- Formulário e lista de tarefas -->
-            <section class="workspace">
+            <!-- Área de cadastro e tarefas -->
+            <section class="grid grid-cols-1 xl:grid-cols-2 gap-6">
 
-                <!-- Painel de cadastro e edição -->
-                <section class="panel form-panel">
+                <!-- Formulário -->
+                <div class="bg-[#202020] p-6 rounded-xl">
 
-                    <div class="panel-heading">
-                        <div>
-                            <h2 id="formHeading">Adicionar tarefa</h2>
-                            <p>Preencha os dados abaixo.</p>
-                        </div>
+                    <h2 class="text-xl font-bold mb-2">
+                        Adicionar tarefa
+                    </h2>
 
-                        <div class="heading-icon">＋</div>
-                    </div>
+                    <p class="text-gray-400 mb-6">
+                        Preencha os dados abaixo.
+                    </p>
 
-                    <!-- Formulário de tarefas -->
-                    <form id="taskForm">
+                    <form>
 
-                        <label for="taskName">
-                            Nome da tarefa <span>*</span>
+                        <!-- Nome -->
+                        <label class="block mb-2">
+                            Nome da tarefa
                         </label>
 
                         <input
-                            id="taskName"
-                            name="taskName"
                             type="text"
                             placeholder="Ex.: Trabalho de Banco de Dados"
-                            maxlength="100"
-                            required
+                            class="w-full bg-[#303030] border border-gray-700 rounded-lg p-3 mb-5 outline-none focus:border-red-500"
                         >
 
-                        <label for="taskDescription">Descrição</label>
+                        <!-- Descrição -->
+                        <label class="block mb-2">
+                            Descrição
+                        </label>
 
                         <textarea
-                            id="taskDescription"
-                            name="taskDescription"
                             rows="3"
                             placeholder="Anote os detalhes importantes..."
+                            class="w-full bg-[#303030] border border-gray-700 rounded-lg p-3 mb-5 outline-none focus:border-red-500"
                         ></textarea>
 
                         <!-- Data e prioridade -->
-                        <div class="form-row">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
                             <div>
-                                <label for="taskDate">Data de entrega</label>
+                                <label class="block mb-2">
+                                    Data de entrega
+                                </label>
 
                                 <input
-                                    id="taskDate"
-                                    name="taskDate"
                                     type="date"
+                                    class="w-full bg-[#303030] border border-gray-700 rounded-lg p-3"
                                 >
                             </div>
 
                             <div>
-                                <label for="taskPriority">Prioridade</label>
+                                <label class="block mb-2">
+                                    Prioridade
+                                </label>
 
-                                <select id="taskPriority" name="taskPriority">
-                                    <option value="Baixa">Baixa</option>
+                                <select class="w-full bg-[#303030] border border-gray-700 rounded-lg p-3">
 
-                                    <option value="Média" selected>
-                                        Média
-                                    </option>
+                                    <option>Baixa</option>
+                                    <option selected>Média</option>
+                                    <option>Alta</option>
 
-                                    <option value="Alta">Alta</option>
                                 </select>
                             </div>
 
                         </div>
 
-                        <!-- Botões do formulário -->
-                        <div class="form-actions">
-
-                            <button
-                                class="primary-button"
-                                type="submit"
-                                id="saveButton"
-                            >
-                                ＋ Adicionar tarefa
-                            </button>
-
-                            <button
-                                class="text-button hidden"
-                                type="button"
-                                id="cancelEdit"
-                            >
-                                Cancelar
-                            </button>
-
-                        </div>
-
-                        <!-- Mensagens de confirmação -->
-                        <p
-                            class="form-message"
-                            id="formMessage"
-                            role="status"
-                        ></p>
+                        <!-- Botão -->
+                        <button
+                            type="button"
+                            class="w-full bg-red-600 hover:bg-red-700 p-3 rounded-lg mt-6 font-bold"
+                        >
+                            + Adicionar tarefa
+                        </button>
 
                     </form>
 
-                </section>
+                </div>
 
-                <!-- Painel da lista de tarefas -->
-                <section class="panel tasks-panel">
+                <!-- Lista de tarefas -->
+                <div class="bg-[#202020] p-6 rounded-xl">
 
-                    <div class="tasks-heading">
-                        <div>
-                            <h2>Lista de tarefas</h2>
+                    <h2 class="text-xl font-bold mb-2">
+                        Lista de tarefas
+                    </h2>
 
-                            <p id="listSubtitle">
-                                Veja tudo o que precisa fazer.
-                            </p>
-                        </div>
+                    <p class="text-gray-400 mb-6">
+                        Veja tudo o que precisa fazer.
+                    </p>
 
-                        <span class="task-total" id="visibleCount">
-                            0 tarefas
-                        </span>
-                    </div>
+                    <!-- Pesquisa e filtro -->
+                    <div class="flex flex-col sm:flex-row gap-3 mb-6">
 
-                    <!-- Pesquisa e filtros -->
-                    <div class="filters">
-
-                        <div class="search-box">
-                            <span aria-hidden="true">⌕</span>
-
-                            <input
-                                id="searchInput"
-                                type="search"
-                                placeholder="Buscar tarefa..."
-                                aria-label="Buscar tarefa"
-                            >
-                        </div>
-
-                        <select
-                            id="priorityFilter"
-                            aria-label="Filtrar por prioridade"
+                        <input
+                            type="search"
+                            placeholder="Buscar tarefa..."
+                            class="flex-1 bg-[#303030] border border-gray-700 rounded-lg p-3 outline-none"
                         >
-                            <option value="all">Todas as prioridades</option>
-                            <option value="Alta">Prioridade alta</option>
-                            <option value="Média">Prioridade média</option>
-                            <option value="Baixa">Prioridade baixa</option>
+
+                        <select class="bg-[#303030] border border-gray-700 rounded-lg p-3">
+
+                            <option>Todas as prioridades</option>
+                            <option>Prioridade alta</option>
+                            <option>Prioridade média</option>
+                            <option>Prioridade baixa</option>
+
                         </select>
 
                     </div>
 
-                    <!-- O JavaScript adiciona as tarefas aqui -->
-                    <div class="task-list" id="taskList"></div>
+                    <!-- Mensagem de lista vazia -->
+                    <div class="text-center py-12">
 
-                    <!-- Mensagem para lista vazia -->
-                    <div class="empty-state" id="emptyState">
-                        <div class="empty-icon">✓</div>
+                        <div class="text-5xl text-red-500 mb-4">
+                            ✓
+                        </div>
 
-                        <h3>Nenhuma tarefa por aqui</h3>
+                        <h3 class="text-lg font-bold">
+                            Nenhuma tarefa por aqui
+                        </h3>
 
-                        <p>
-                            Adicione uma tarefa ou altere os filtros
-                            para ver seus itens.
+                        <p class="text-gray-400 mt-2">
+                            Adicione uma tarefa para começar.
                         </p>
+
                     </div>
 
-                </section>
+                </div>
 
             </section>
 
-            <!-- Rodapé com o novo botão de tema -->
-            <footer class="site-footer">
+            <!-- Rodapé -->
+            <footer class="text-center text-gray-500 mt-10 text-sm">
 
-                <p>
-                    EsToDoList
-                    <span>•</span>
-                    Seus estudos organizados em um só lugar.
-                </p>
-
-                <!-- Botão para alternar entre os temas -->
-                <button
-                    type="button"
-                    id="themeToggle"
-                    class="theme-toggle"
-                    aria-label="Ativar modo claro"
-                    aria-pressed="false"
-                >
-                    <span id="themeIcon" aria-hidden="true">☀</span>
-                    <span id="themeLabel">Ativar modo claro</span>
-                </button>
+                EsToDoList • Seus estudos organizados em um só lugar.
 
             </footer>
 
         </main>
 
     </div>
-
-    <!-- Conecta o arquivo JavaScript -->
-    <script src="script.js"></script>
 
 </body>
 </html>
